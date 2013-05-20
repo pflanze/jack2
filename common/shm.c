@@ -64,7 +64,11 @@ static int GetUID()
     return  _getpid();
     //#error "No getuid function available"
 #else
-    return getuid();
+    if (getenv ("JACK_PROMISCUOUS_SERVER")) {
+	return -1;
+    } else {
+	return getuid();
+    }
 #endif
 }
 
