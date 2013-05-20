@@ -116,11 +116,7 @@ namespace Jack {
 
         /* format the path name on the first call */
         if (user_dir[0] == '\0') {
-            if (getenv ("JACK_PROMISCUOUS_SERVER")) {
-                snprintf(user_dir, sizeof(user_dir), "%s/jack", jack_tmpdir);
-            } else {
-                snprintf(user_dir, sizeof(user_dir), "%s/jack-%d", jack_tmpdir, GetUID());
-            }
+	    snprintf(user_dir, sizeof(user_dir), "%s/jack-%d", jack_tmpdir, GetUID());
         }
 
         return user_dir;
