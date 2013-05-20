@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 #include <fcntl.h>
 #include <stdio.h>
 #include <sys/time.h>
+#include <assert.h>
 
 namespace Jack
 {
@@ -32,7 +33,9 @@ void JackPosixSemaphore::BuildName(const char* client_name, const char* server_n
 {
     char ext_client_name[SYNC_MAX_NAME_SIZE + 1];
     JackTools::RewriteName(client_name, ext_client_name);
-    snprintf(res, size, "jack_sem.%d_%s_%s", JackTools::GetUID(), server_name, ext_client_name);
+    int r=
+	snprintf(res, size, "jack_sem.%d_%s_%s", JackTools::GetUID(), server_name, ext_client_name);
+    assert((r > 0) && (r < size));
 }
 
 bool JackPosixSemaphore::Signal()
