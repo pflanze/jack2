@@ -113,10 +113,12 @@ namespace Jack {
     char* JackTools::UserDir()
     {
         static char user_dir[JACK_PATH_MAX + 1] = "";
+	int r;
 
         /* format the path name on the first call */
         if (user_dir[0] == '\0') {
-	    snprintf(user_dir, sizeof(user_dir), "%s/jack-%d", jack_tmpdir, GetUID());
+	    int r= snprintf(user_dir, sizeof(user_dir), "%s/jack-%d", jack_tmpdir, GetUID());
+	    assert((r > 0) && (r < sizeof(user_dir)));
         }
 
         return user_dir;
